@@ -6,8 +6,6 @@ import com.sddev.weather.data.network.RetrofitClient
 import com.sddev.weather.data.network.WeatherApiService
 import com.sddev.weather.data.repository.WeatherRepository
 import com.sddev.weather.data.repository.WeatherRepositoryImpl
-import com.sddev.weather.ui.viewmodels.CurrentWeatherViewModel
-import com.sddev.weather.utils.DateUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
