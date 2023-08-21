@@ -6,37 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sddev.weather.R
-import com.sddev.weather.data.network.RetrofitClient
-import com.sddev.weather.data.model.WeatherResponse
 import com.sddev.weather.databinding.FragmentWeatherBinding
-import com.sddev.weather.databinding.WeatherInfoCardBinding
+import com.sddev.weather.ui.adapters.WeeklyForecastAdapter
 import com.sddev.weather.ui.viewmodels.CurrentWeatherViewModel
 import com.sddev.weather.ui.viewmodels.WeatherState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
@@ -72,6 +54,10 @@ class WeatherFragment : Fragment() {
             mapOf("type" to "humidity","layout" to binding.humidityLL),
             mapOf("type" to "visibility","layout" to binding.visibilityLL)
         )
+
+        val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        val itemList = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
+        val weeklyForecastAdapter = WeeklyForecastAdapter(itemList)
 
         viewModel.weatherState.observe(viewLifecycleOwner){state->
             when (state) {
@@ -113,6 +99,9 @@ class WeatherFragment : Fragment() {
                 }
             }
         }
+
+        binding.weeklyForecastRV.layoutManager = layoutManager
+        binding.weeklyForecastRV.adapter = weeklyForecastAdapter
 
     }
 
